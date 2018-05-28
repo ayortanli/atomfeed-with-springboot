@@ -14,10 +14,3 @@ In our scenario, first service is responsible for managing authors info. Second 
 You can test application with rest calls like belows:
 
 TBD  
-
-
-ToDos
-- Simple Spring Data JPA implementation with rest interface
-- Rome atom feed integration (check over http)
-- Duplicate projects as two different microservice (one as server and another as client)
-- Communicate services with rome
