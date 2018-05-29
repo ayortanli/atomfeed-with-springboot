@@ -8,9 +8,9 @@ import javax.persistence.*;
 public class Author {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
-    private long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AUTHOR_SEQ")
+    @SequenceGenerator(sequenceName = "author_seq", allocationSize = 1, name = "AUTHOR_SEQ")
+    private Long id;
 
     @Column(length = 200, nullable = false)
     private String name;
@@ -21,7 +21,7 @@ public class Author {
     @Column(length = 200, nullable = false)
     private String country;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
