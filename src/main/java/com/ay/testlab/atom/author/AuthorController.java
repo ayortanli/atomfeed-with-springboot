@@ -1,7 +1,5 @@
-package com.ay.testlab.atom.rest;
+package com.ay.testlab.atom.author;
 
-import com.ay.testlab.atom.author.Author;
-import com.ay.testlab.atom.author.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
