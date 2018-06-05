@@ -18,7 +18,7 @@ public class Book {
     private Long publishYear;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
     private BookAuthor author;
 
     public Long getId() {

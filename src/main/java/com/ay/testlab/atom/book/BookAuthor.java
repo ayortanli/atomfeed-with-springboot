@@ -2,6 +2,8 @@ package com.ay.testlab.atom.book;
 
 import javax.persistence.*;
 
+@Entity
+@Table
 public class BookAuthor {
 
     @Id
