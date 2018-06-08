@@ -1,5 +1,6 @@
 package com.ay.testlab.atom.book;
 
+import com.sun.org.apache.xerces.internal.util.HTTPInputSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,9 @@ public class BookController {
         if(bookService.isBookExist(book)){
             return new ResponseEntity(HttpStatus.CONFLICT);
         }
+        if(!bookService.isAuthorExist(book.getAuthor())){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
         bookService.insertBook(book);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/book/{id}").buildAndExpand(book.getId()).toUri());
@@ -37,6 +41,9 @@ public class BookController {
         Optional<Book> storedBook = bookService.getBook(id);
         if(!storedBook.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if(!bookService.isAuthorExist(book.getAuthor())){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
         Book updatedBook = bookService.updateBook(id, book);
         return new ResponseEntity<Book>(updatedBook, HttpStatus.OK);
@@ -69,4 +76,23 @@ public class BookController {
         }
         return new ResponseEntity<Book>(book.get(), HttpStatus.OK);
     }
+
+    @RequestMapping(value="/author", method = RequestMethod.GET)
+    public ResponseEntity<List<BookAuthor>> findAllAuthors() {
+        List<BookAuthor> authors = bookService.getAllAuthors();
+        if(authors.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<BookAuthor>>(authors, HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/author/{id}", method = RequestMethod.GET)
+    public ResponseEntity<BookAuthor> findAuthor(@PathVariable("id") Long id) {
+        Optional<BookAuthor> author = bookService.getAuthor(id);
+        if(!author.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<BookAuthor>(author.get(), HttpStatus.OK);
+    }
+
 }

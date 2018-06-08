@@ -10,10 +10,12 @@ import java.util.Optional;
 public class BookServiceImpl implements BookService {
 
     private BookRepository bookRepository;
+    private BookAuthorRepository authorRepository;
 
     @Autowired
-    public BookServiceImpl(BookRepository bookRepository) {
+    public BookServiceImpl(BookRepository bookRepository, BookAuthorRepository authorRepository) {
         this.bookRepository = bookRepository;
+        this.authorRepository = authorRepository;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public boolean isBookExist(Book book) {
         Book storedBook = bookRepository.findFirstByNameAndAuthorId(book.getName(), book.getAuthor().getId());
-        return storedBook !=null;
+        return storedBook != null;
     }
 
     @Override
@@ -50,5 +52,21 @@ public class BookServiceImpl implements BookService {
     @Override
     public Optional<Book> getBook(Long id) {
         return bookRepository.findById(id);
+    }
+
+    @Override
+    public List<BookAuthor> getAllAuthors() {
+        return authorRepository.findAll();
+    }
+
+    @Override
+    public Optional<BookAuthor> getAuthor(Long id) {
+        return authorRepository.findById(id);
+    }
+
+    @Override
+    public boolean isAuthorExist(BookAuthor author) {
+        Optional<BookAuthor> storedAuthor = getAuthor(author.getId());
+        return storedAuthor.isPresent();
     }
 }
