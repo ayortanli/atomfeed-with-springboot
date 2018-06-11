@@ -1,5 +1,6 @@
 package com.ay.testlab.atom.author;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,4 +12,6 @@ public interface AuthorService {
     boolean isAuthorExist(Author author);
     List<Author> getAllAuthors();
     Optional<Author> getAuthor(Long id);
+    Date getLastUpdateTime();
+    List<Author> getUpdatedAuthorsAfter(Date after);
 }

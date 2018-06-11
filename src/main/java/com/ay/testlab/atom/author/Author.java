@@ -1,7 +1,10 @@
 package com.ay.testlab.atom.author;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table
@@ -20,6 +23,10 @@ public class Author {
 
     @Column(length = 200, nullable = false)
     private String country;
+
+    @JsonIgnore
+    @Column
+    private Date lastUpdateTime;
 
     public Long getId() {
         return id;
@@ -47,5 +54,13 @@ public class Author {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public Date getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(Date lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
     }
 }

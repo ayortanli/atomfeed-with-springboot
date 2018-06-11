@@ -1,6 +1,5 @@
 package com.ay.testlab.atom.book;
 
-import com.sun.org.apache.xerces.internal.util.HTTPInputSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
