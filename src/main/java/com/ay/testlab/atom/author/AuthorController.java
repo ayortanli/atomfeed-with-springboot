@@ -6,8 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -73,12 +75,13 @@ public class AuthorController {
         return new ResponseEntity<Author>(author.get(), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/feed", method = RequestMethod.GET)
-    public ResponseEntity findAuthorsUpdatedAfter(WebRequest webRequest){
+    @RequestMapping(value="/feed", method = RequestMethod.GET, produces = "application/atom+xml")
+    public ModelAndView findAuthorsUpdatedAfter(WebRequest webRequest, HttpServletResponse response){
         Date lastUpdate = authorService.getLastUpdateTime();
         if( lastUpdate!= null && webRequest.checkNotModified(lastUpdate.getTime())){
-            return new ResponseEntity(HttpStatus.NOT_MODIFIED);
+            response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+            return null;
         }
-        return null;
+        return new ModelAndView(new AuthorAtomFeedView(lastUpdate), "authors", authorService.getAllAuthors());
     }
 }
