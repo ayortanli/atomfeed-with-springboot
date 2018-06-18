@@ -14,4 +14,5 @@ public interface BookService {
     List<BookAuthor> getAllAuthors();
     Optional<BookAuthor> getAuthor(Long id);
     boolean isAuthorExist(BookAuthor author);
+    void saveUpdateAuthor(BookAuthor author);
 }

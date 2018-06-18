@@ -1,13 +1,18 @@
 package com.ay.testlab.atom.book;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+
 @Component
 public class BookServiceImpl implements BookService {
+
+    private final Logger log = LoggerFactory.getLogger(BookServiceImpl.class);
 
     private BookRepository bookRepository;
     private BookAuthorRepository authorRepository;
@@ -21,6 +26,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public void insertBook(Book book) {
         bookRepository.save(book);
+        log.info("Book inserted: "+ book);
     }
 
     @Override
@@ -30,12 +36,14 @@ public class BookServiceImpl implements BookService {
         storedBook.setPublishYear(book.getPublishYear());
         storedBook.setAuthor(book.getAuthor());
         bookRepository.save(storedBook);
+        log.info("Book updated: "+ book);
         return storedBook;
     }
 
     @Override
     public void deleteBook(Long id) {
         bookRepository.deleteById(id);
+        log.info("Book deleted: book_id"+ id);
     }
 
     @Override
@@ -68,5 +76,15 @@ public class BookServiceImpl implements BookService {
     public boolean isAuthorExist(BookAuthor author) {
         Optional<BookAuthor> storedAuthor = getAuthor(author.getId());
         return storedAuthor.isPresent();
+    }
+
+    @Override
+    public void saveUpdateAuthor(BookAuthor author) {
+        authorRepository.save(author);
+        if(isAuthorExist(author)){
+            log.info("Book author updated: "+ author);
+        } else{
+            log.info("Book author inserted: "+ author);
+        }
     }
 }

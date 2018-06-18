@@ -63,4 +63,9 @@ public class Author {
     public void setLastUpdateTime(Date lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
+
+    @Override
+    public String toString(){
+        return "Author: id("+ id+") " + name+ " " + surname + " " + country;
+    }
 }

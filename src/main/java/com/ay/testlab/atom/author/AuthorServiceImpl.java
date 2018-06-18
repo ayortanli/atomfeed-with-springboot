@@ -1,16 +1,18 @@
 package com.ay.testlab.atom.author;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.auditing.CurrentDateTimeProvider;
 import org.springframework.stereotype.Component;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Component
 public class AuthorServiceImpl implements AuthorService {
+
+    private final Logger log = LoggerFactory.getLogger(AuthorServiceImpl.class);
 
     private final AuthorRepository authorRepository;
 
@@ -23,6 +25,7 @@ public class AuthorServiceImpl implements AuthorService {
     public void insertAuthor(Author author) {
         author.setLastUpdateTime(new Date());
         authorRepository.save(author);
+        log.info("Author inserted: "+ author);
     }
 
     @Override
@@ -33,12 +36,14 @@ public class AuthorServiceImpl implements AuthorService {
         storedAuthor.setCountry(author.getCountry());
         storedAuthor.setLastUpdateTime(new Date());
         authorRepository.save(storedAuthor);
+        log.info("Author updated: "+ author);
         return storedAuthor;
     }
 
     @Override
     public void deleteAuthor(Long id) {
         authorRepository.deleteById(id);
+        log.info("Author deleted: Author_id: "+ id);
     }
 
     @Override

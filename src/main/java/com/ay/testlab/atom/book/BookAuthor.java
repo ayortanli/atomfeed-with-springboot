@@ -7,8 +7,6 @@ import javax.persistence.*;
 public class BookAuthor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BOOK_AUTHOR_SEQ")
-    @SequenceGenerator(sequenceName = "book_author_seq", allocationSize = 1, name = "BOOK_AUTHOR_SEQ")
     private Long id;
 
     @Column(length = 200, nullable = false)
@@ -46,5 +44,10 @@ public class BookAuthor {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    @Override
+    public String toString(){
+        return "Book_Author: id("+ id+") " + name+ " " + surname + " " + country;
     }
 }

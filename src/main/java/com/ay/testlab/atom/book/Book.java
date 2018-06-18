@@ -48,4 +48,9 @@ public class Book {
     public void setPublishYear(Long publishYear) {
         this.publishYear = publishYear;
     }
+
+    @Override
+    public String toString() {
+        return "Book: id(" + id + ") "+ name + " " + publishYear + " " + author;
+    }
 }

@@ -2,3 +2,6 @@ spring:
   h2:
     console:
       enabled: true
+authorService:
+  feed:
+    url: http://localhost:8080/author/feed/
